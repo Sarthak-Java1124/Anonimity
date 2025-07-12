@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import { useInfiniteReadContracts } from "wagmi";
-import { useWriteContract , useReadContract } from 'wagmi';
+'use client';
+
+import { useState } from "react";
+import { useWriteContract } from 'wagmi';
 import {abi} from "../../dataabi.json";
 
 export default function SendMessageToChain() {
   const [message, setMessage] = useState("");
 
-  const { data: hash, writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useWriteContract();
 
-  
-  
   const handleSendMessage = async () => {
-  try {
+    try {
       if (message.trim()) {
         writeContractAsync({
           abi,
@@ -20,13 +19,11 @@ export default function SendMessageToChain() {
           args: [message],
         });
       }
-  } catch (error) {
-     throw new Error("Error sending message: " + error);
-  }
+    } catch (error) {
+      throw new Error("Error sending message: " + error);
+    }
   };
 
-  
-   
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full max-w-md mb-6">
