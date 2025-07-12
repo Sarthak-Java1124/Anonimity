@@ -38,7 +38,7 @@ const AboutUs = () => {
               </p>
               
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-poppins">
-                Created by <span className="text-yellow-300 font-semibold">Sarthak Harsh</span>, this platform offers a unique space where you can share your deepest thoughts, secrets, and confessions with complete anonymity while ensuring they're permanently preserved on the blockchain.
+                Created by <span className="text-yellow-300 font-semibold">Sarthak Harsh</span>, this platform offers a unique space where you can share your deepest thoughts, secrets, and confessions with complete anonymity while ensuring they&apos;re permanently preserved on the blockchain.
               </p>
 
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-poppins">

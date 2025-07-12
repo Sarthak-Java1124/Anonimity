@@ -1,17 +1,9 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-import Head from "next/head";
 import Starfield from "../components/Starfield";
 import Intro from "../components/Intro";
 import Footer from "../components/Footer";
-
-const MotionButton = dynamic(
-  () => import('framer-motion').then((mod) => mod.motion.button),
-  { ssr: false }
-);
-
 import { useReadContract } from 'wagmi';
 import { abi } from "../../dataabi.json";
 import { sepolia } from 'viem/chains';
@@ -63,11 +55,6 @@ export default function AllMessagesPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-black font-inter overflow-hidden">
-      <Head>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
-        <title>All Messages - Anonimity</title>
-      </Head>
-      
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
         <Starfield />
       </div>

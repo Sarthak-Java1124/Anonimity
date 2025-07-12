@@ -1,69 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { useReadContract } from 'wagmi';
 import { abi } from "../../dataabi.json";
 import { useRouter } from 'next/navigation';
 import { sepolia } from 'viem/chains';
-
-const dummyMessages = [
-  {
-    author: 'Anon #1',
-    message: 'Did you hear about the secret party on the blockchain? 🎉',
-  },
-  {
-    author: 'Anon #2',
-    message: 'Someone just sent 100 ETH to a mystery address... 👀',
-  },
-  {
-    author: 'Anon #3',
-    message: 'Rumor has it, a new DAO is forming in town! 🏛️',
-  },
-  {
-    author: 'Anon #4',
-    message: 'The devs are planning something big for next week. Stay tuned! 🚀',
-  },
-  {
-    author: 'Anon #5',
-    message: 'Who is the wallet behind all those meme coin buys? 🤔',
-  },
-];
-
-function GossipCarousel() {
-  const [current, setCurrent] = useState(0);
-  const total = dummyMessages.length;
- 
-
-  const prev = () => setCurrent((c) => (c - 1 + total) % total);
-  const next = () => setCurrent((c) => (c + 1) % total);
-
-  return (
-    <div className="w-full flex justify-center mt-8 md:mt-12 px-4">
-      <div className="relative w-full max-w-2xl flex items-center">
-        <button
-          onClick={prev}
-          className="absolute left-0 z-10 bg-yellow-400/80 hover:bg-yellow-300 text-black rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-lg transition-all duration-200 border-2 border-yellow-200/60"
-          aria-label="Previous gossip"
-        >
-          <span className="text-2xl md:text-3xl font-bold">&#8592;</span>
-        </button>
-        <div className="mx-auto bg-white bg-opacity-10 backdrop-blur-2xl border border-yellow-300/30 rounded-2xl shadow-[0_8px_32px_0_rgba(255,224,102,0.25)] px-6 md:px-8 py-8 md:py-10 w-full flex flex-col items-center relative overflow-hidden min-h-[160px] md:min-h-[180px]">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-200/60 via-yellow-400/80 to-yellow-200/60 rounded-t-2xl blur-sm opacity-80 pointer-events-none" />
-          <div className="text-base md:text-lg text-yellow-200 font-poppins mb-2">{dummyMessages[current].author}</div>
-          <div className="text-lg md:text-2xl text-white font-poppins text-center drop-shadow-[0_0_12px_#ffe066]">{dummyMessages[current].message}</div>
-        </div>
-        <button
-          onClick={next}
-          className="absolute right-0 z-10 bg-yellow-400/80 hover:bg-yellow-300 text-black rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-lg transition-all duration-200 border-2 border-yellow-200/60"
-          aria-label="Next gossip"
-        >
-          <span className="text-2xl md:text-3xl font-bold">&#8594;</span>
-        </button>
-      </div>
-    </div>
-  );
-}
 
 type Message = {
   messages: string;
