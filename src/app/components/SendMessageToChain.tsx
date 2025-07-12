@@ -1,0 +1,67 @@
+import React, { useState } from "react";
+import { useInfiniteReadContracts } from "wagmi";
+import { useWriteContract , useReadContract } from 'wagmi';
+import {abi} from "../../dataabi.json";
+
+export default function SendMessageToChain() {
+  const [message, setMessage] = useState("");
+
+  const { data: hash, writeContractAsync, isPending } = useWriteContract();
+
+  
+  
+  const handleSendMessage = async () => {
+  try {
+      if (message.trim()) {
+        writeContractAsync({
+          abi,
+          address: "0xBF8296D39a78961e7C5AeeA217E3308eF944Bbd8",
+          functionName: "sendMessage",
+          args: [message],
+        });
+      }
+  } catch (error) {
+     throw new Error("Error sending message: " + error);
+  }
+  };
+
+  
+   
+  return (
+    <div className="w-full flex flex-col items-center">
+      <div className="w-full max-w-md mb-6">
+        <h2 className="font-poppins text-2xl text-slate-200 font-normal text-left">Send Your first Message</h2>
+      </div>
+      <div
+        className="w-full max-w-md rounded-xl p-8 relative font-poppins"
+        style={{
+          background: "rgba(20,20,20,0.8)",
+          border: "1.5px solid #ffd70022",
+          boxShadow: "0 0 20px #ffd70044"
+        }}
+      >
+        <label className="block mb-4 text-base font-medium" style={{ color: "#ffd700" }}>
+          Your Message
+        </label>
+        <textarea
+          className="w-full h-24 bg-transparent text-gray-300 placeholder:text-[#d1d5db] text-xl font-normal rounded-lg border-none focus:ring-0 focus:outline-none resize-none mb-8 font-poppins"
+          placeholder="Type your message here..."
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+        />
+        <button
+          onClick={handleSendMessage}
+          disabled={isPending || !message.trim()}
+          className="w-fit px-8 py-3 rounded-full font-bold text-lg mx-auto block transition-all duration-200 font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+            background: "#ffd700",
+            color: "#181818",
+            boxShadow: "0 0 20px #ffd70044"
+          }}
+        >
+          {isPending ? "Sending..." : "Send Message"}
+        </button>
+      </div>
+    </div>
+  );
+} 

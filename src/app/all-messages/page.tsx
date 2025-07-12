@@ -1,0 +1,157 @@
+'use client';
+
+import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
+import Head from "next/head";
+import Starfield from "../components/Starfield";
+import Intro from "../components/Intro";
+import Footer from "../components/Footer";
+
+const MotionButton = dynamic(
+  () => import('framer-motion').then((mod) => mod.motion.button),
+  { ssr: false }
+);
+
+import { useReadContract } from 'wagmi';
+import { abi } from "../../dataabi.json";
+import { sepolia } from 'viem/chains';
+
+type Message = {
+  messages: string;
+  messageTimestamp: bigint;
+};
+
+function AllMessagesCard({ message, index }: { message: Message; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: index * 0.1, ease: 'easeOut' }}
+      whileHover={{ scale: 1.02, boxShadow: '0 0 32px #ffd70088' }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full max-w-md rounded-xl p-8 relative font-poppins cursor-pointer"
+      style={{
+        background: "rgba(20,20,20,0.8)",
+        border: "1.5px solid #ffd70022",
+        boxShadow: "0 0 20px #ffd70044"
+      }}
+    >
+      <label className="block mb-4 text-base font-medium" style={{ color: "#ffd700" }}>
+        Hot Gossip #{index + 1}
+      </label>
+      <div className="w-full text-gray-300 text-xl font-normal rounded-lg font-poppins">
+        {message.messages}
+      </div>
+      <div className="mt-4 text-xs text-gray-500 font-poppins">
+        Timestamp: {new Date(Number(message.messageTimestamp) * 1000).toLocaleString()}
+      </div>
+    </motion.div>
+  );
+}
+
+export default function AllMessagesPage() {
+  const result = useReadContract({
+    abi,
+    address: '0xBF8296D39a78961e7C5AeeA217E3308eF944Bbd8',
+    functionName: "getTotalMessages",
+    chainId : sepolia.id
+  }) as {
+    data: Message[] | undefined;
+    isLoading: boolean;
+    error: Error | null;
+  };
+
+  return (
+    <div className="relative min-h-screen w-full bg-black font-inter overflow-hidden">
+      <Head>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+        <title>All Messages - Anonimity</title>
+      </Head>
+      
+      {/* Starfield background covering the whole screen */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
+        <Starfield />
+      </div>
+      
+      <Intro />
+      
+      {/* Page Title */}
+      <motion.div
+        className="w-full flex justify-center mt-24"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+      >
+        <h2 className="font-poppins text-6xl md:text-7xl text-white font-normal drop-shadow-[0_0_12px_#fffde4,0_0_4px_#fffde4]">
+          All Hot Gossips
+        </h2>
+      </motion.div>
+      
+      {/* Back to Home Button */}
+      <motion.div
+        className="w-full flex justify-center mt-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+      >
+        <motion.button
+          onClick={() => window.history.back()}
+          className="px-8 py-3 rounded-full font-bold text-lg transition-all duration-200 font-poppins hover:scale-105"
+          style={{
+            background: "#ffd700",
+            color: "#181818",
+            boxShadow: "0 0 20px #ffd70044"
+          }}
+        >
+          ← Back to Home
+        </motion.button>
+      </motion.div>
+      
+      {/* Loading state */}
+      {result.isLoading && (
+        <div className="w-full flex justify-center mt-12">
+          <div className="text-yellow-400 font-poppins text-xl">Loading all gossips...</div>
+        </div>
+      )}
+      
+      {/* Error state */}
+      {result.error && (
+        <div className="w-full flex justify-center mt-12">
+          <div className="text-red-400 font-poppins text-xl">Error loading gossips: {result.error.message}</div>
+        </div>
+      )}
+      
+      {/* All Messages Grid */}
+      {!result.isLoading && !result.error && (
+        <motion.div
+          className="w-full flex flex-wrap justify-center gap-8 mt-12 px-4 pb-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
+        >
+          {result.data?.map((message, index) => (
+            <AllMessagesCard key={index} message={message} index={index} />
+          ))}
+        </motion.div>
+      )}
+      
+      {/* Empty state */}
+      {!result.isLoading && !result.error && (!result.data || result.data.length === 0) && (
+        <motion.div
+          className="w-full flex justify-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6, ease: 'easeOut' }}
+        >
+          <div className="text-yellow-400 font-poppins text-xl text-center">
+            No gossips yet!<br />
+            Be the first to send a message to the chain.
+          </div>
+        </motion.div>
+      )}
+      
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
+} 
