@@ -12,6 +12,7 @@ export default function NavBar() {
             </div>
             <a className="text-white font-normal text-lg px-4 py-2 hover:text-[#00ffc3] transition cursor-pointer font-poppins">About us</a>
             <a className="text-white font-normal text-lg px-4 py-2 hover:text-[#00ffc3] transition cursor-pointer font-poppins">Send Message</a>
+            <a className="text-white font-normal text-lg px-4 py-2 hover:text-[#00ffc3] transition cursor-pointer font-poppins">Send Message</a>
           </div>
         </div>
       </div>

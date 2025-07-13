@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useConnect, useWriteContract } from 'wagmi';
 import {abi} from "../../dataabi.json";
+import { toast } from "sonner";
 
 export default function SendMessageToChain() {
   const [message, setMessage] = useState("");
@@ -12,26 +13,39 @@ export default function SendMessageToChain() {
 
   const handleSendMessage = async () => {
     try {
-      const connector = connectors.find((c) => c.id === 'injected');
-      if (!connector) throw new Error('No injected connector found');
-
-       await connectAsync({ connector });
+      const connectorFind = connectors.find((c) => c.id === 'injected');
+      
+      if (!connectorFind) {
+        toast("No Wallet found first Install a Wallet");
+        return;
+      }
+      
+      await connectAsync({ connector: connectorFind });
       
       if (message.trim()) {
-        writeContractAsync({
+        await writeContractAsync({
           abi,
           address: "0xBF8296D39a78961e7C5AeeA217E3308eF944Bbd8",
           functionName: "sendMessage",
           args: [message],
         });
+        
+        toast.success("Message sent successfully!");
+        setMessage("");
       }
-    } catch (error) {
-      throw new Error("Error sending message: " + error);
+    } catch {
+      toast.error("No Wallet Found");
     }
   };
 
   return (
     <div className="w-full flex flex-col items-center">
+      <button 
+        onClick={() => toast("Test toast working!")}
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+      >
+        Test Toast
+      </button>
       <div className="w-full max-w-md mb-6">
         <h2 className="font-poppins text-2xl text-slate-200 font-normal text-left transition-all duration-300 hover:text-yellow-400 hover:italic">Send Your first Message</h2>
       </div>

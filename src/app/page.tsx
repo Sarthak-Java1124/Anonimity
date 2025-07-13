@@ -23,7 +23,7 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        <h2 className="font-poppins text-4xl md:text-6xl lg:text-7xl text-white font-normal text-center transition-all duration-300 hover:text-yellow-400 hover:italic">
+        <h2 className="font-poppins text-4xl md:text-6xl lg:text-7xl text-white font-normal  text-center">
           Send Messages To The Chain
         </h2>
       </motion.div>
