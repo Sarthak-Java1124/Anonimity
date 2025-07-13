@@ -1,16 +1,22 @@
 'use client';
 
 import { useState } from "react";
-import { useWriteContract } from 'wagmi';
+import { useConnect, useWriteContract } from 'wagmi';
 import {abi} from "../../dataabi.json";
 
 export default function SendMessageToChain() {
   const [message, setMessage] = useState("");
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending  } = useWriteContract();
+  const {connectAsync , connectors}  = useConnect();
 
   const handleSendMessage = async () => {
     try {
+      const connector = connectors.find((c) => c.id === 'injected');
+      if (!connector) throw new Error('No injected connector found');
+
+       await connectAsync({ connector });
+      
       if (message.trim()) {
         writeContractAsync({
           abi,
@@ -27,7 +33,7 @@ export default function SendMessageToChain() {
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full max-w-md mb-6">
-        <h2 className="font-poppins text-2xl text-slate-200 font-normal text-left">Send Your first Message</h2>
+        <h2 className="font-poppins text-2xl text-slate-200 font-normal text-left transition-all duration-300 hover:text-yellow-400 hover:italic">Send Your first Message</h2>
       </div>
       <div
         className="w-full max-w-md rounded-xl p-8 relative font-poppins"

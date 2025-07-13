@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 import { motion } from 'framer-motion';
 
 export default function Home() {
-  return (
+    return (
     <div className="relative min-h-screen w-full bg-black font-inter overflow-hidden">
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
         <Starfield />
@@ -23,7 +23,7 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        <h2 className="font-poppins text-4xl md:text-6xl lg:text-7xl text-white font-normal drop-shadow-[0_0_12px_#fffde4,0_0_4px_#fffde4] text-center">
+        <h2 className="font-poppins text-4xl md:text-6xl lg:text-7xl text-white font-normal text-center transition-all duration-300 hover:text-yellow-400 hover:italic">
           Send Messages To The Chain
         </h2>
       </motion.div>
@@ -42,6 +42,6 @@ export default function Home() {
       <AboutUs />
       
       <Footer />
-    </div>
-  );
+      </div>
+    );
 }

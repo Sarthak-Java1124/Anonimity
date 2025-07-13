@@ -62,7 +62,7 @@ export default function GossipSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
       >
-        <h2 className="font-poppins text-4xl md:text-6xl lg:text-7xl text-white font-normal drop-shadow-[0_0_12px_#fffde4,0_0_4px_#fffde4] text-center">
+        <h2 className="font-poppins text-4xl md:text-6xl lg:text-7xl text-white font-normal text-center transition-all duration-300 hover:text-yellow-400 hover:italic">
           Read Some Hot Gossips
         </h2>
       </motion.div>

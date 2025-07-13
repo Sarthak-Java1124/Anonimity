@@ -1,11 +1,12 @@
 "use client"
 
-import React from "react";
 import { motion } from "framer-motion";
 import { MdSecurity, MdAccessTime, MdStorage } from "react-icons/md";
 
 const AboutUs = () => {
+
   return (
+    
     <motion.section
       className="relative w-full py-20 px-4 z-10 font-poppins"
       initial={{ opacity: 0, y: 60 }}
