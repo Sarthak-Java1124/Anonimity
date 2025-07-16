@@ -15,4 +15,5 @@ export const wagmiConfig = createConfig({
     [base.id]: http(),
     [sepolia.id] : http()
   },
+  
 })

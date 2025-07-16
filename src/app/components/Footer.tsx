@@ -13,9 +13,14 @@ export default function Footer() {
     >
       <div className="flex items-center gap-2 mb-1">
         <span className="w-2 h-2 rounded-full" style={{ background: "#ffd700" }}></span>
-        <span className="font-poppins text-sm text-gray-400">&copy; {new Date().getFullYear()} Anonimity. All rights reserved.</span>
+        <span className="font-poppins text-sm text-gray-400">&copy; {new Date().getFullYear()} Sarthak Harsh. All rights reserved.</span>
       </div>
-      <div className="font-poppins text-xs text-gray-500">Built with Next.js & Tailwind CSS</div>
+      <div className="font-poppins text-xs text-red-500">Buy me a coffee 
+
+      </div>
+      <div className="font-poppins text-xs text-red-500">J4otTaxFrEpJcMYvvazkprRdaSdNWVAB1WXTb8t1XNv9
+        
+        </div>
     </motion.footer>
   );
 } 
